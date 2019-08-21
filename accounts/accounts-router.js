@@ -62,6 +62,23 @@ router.put('/:id', (req, res) => {
       res.status(400).json({ message: 'Could not update.' })
     })
 })
+
+router.delete('/:id', (req, res) => {
+  
+    const { id } = req.params;
+  
+    db('accounts').where({ id }).del()
+    .then((count) => {
+      if (count) {
+        res.json({ message: `${count} account(s) was deleted.` })
+      } else {
+        res.status(500).json({ message: 'Could not delete account.' })
+      }
+    })
+    .catch((error) => {
+      res.status(400).json({ message: 'Could not find account to delete.' })
+    })
+})
   
 
 module.exports = router;
