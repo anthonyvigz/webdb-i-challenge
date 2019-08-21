@@ -45,6 +45,23 @@ router.post('/', (req, res) => {
       res.status(400).json({ message: 'Error posting the account.' })
     })
 })
+
+router.put('/:id', (req, res) => {
+  
+    const { id } = req.params;
+    const changes = req.body;
+  
+    db('accounts').where({ id }).update(changes)
+    .then((count) => {
+      if (count) {
+        res.json({ message: `Changes were successfully made. Count: ${count}.` })
+      } else {
+        res.status(500).json({ message: 'Could not make changes.' })
+    }})
+    .catch((error) => {
+      res.status(400).json({ message: 'Could not update.' })
+    })
+})
   
 
 module.exports = router;
