@@ -29,4 +29,22 @@ router.get('/:id', (req, res) => {
     })
 })
 
+router.post('/', (req, res) => {
+  
+    const account = req.body;
+  
+    db('accounts').insert({ account })
+    .then((array) => {
+      if (array) {
+        res.json({ message: 'Successfully added a new account.' })
+      } else {
+        res.status(500).json({ message: 'Could not add the account.' })
+      }
+    })
+    .catch((error) => {
+      res.status(400).json({ message: 'Error posting the account.' })
+    })
+})
+  
+
 module.exports = router;
